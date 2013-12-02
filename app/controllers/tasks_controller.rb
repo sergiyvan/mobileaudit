@@ -26,7 +26,7 @@ class TasksController < ApplicationController
   def create
     amount = task_params[:amount].to_i || 1 #at least one task should be created
     task_instances_content = task_params[:content]
-    @task = Task.new(task_params.except!(:amount, :content))
+    @task = Task.new(task_params.except!(:amount))
     amount.times do
       @task.task_instances.new(content: task_instances_content, status: :created)
     end

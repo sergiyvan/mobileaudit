@@ -5,6 +5,7 @@ gem 'rails', '4.0.0'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
+#gem 'foreigner'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -34,6 +35,7 @@ end
 
 group :development do
   gem 'awesome_print'
+  gem 'debugger'
 end
 
 group :development, :test do

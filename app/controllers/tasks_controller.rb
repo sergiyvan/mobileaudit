@@ -24,7 +24,12 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
+    amount = task_params[:amount].to_i || 1 #at least one task should be created
+    task_instances_content = task_params[:content]
+    @task = Task.new(task_params.except!(:amount, :content))
+    amount.times do
+      @task.task_instances.new(content: task_instances_content, status: :created)
+    end
 
     respond_to do |format|
       if @task.save
@@ -35,13 +40,14 @@ class TasksController < ApplicationController
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
     respond_to do |format|
-      if @task.update(task_params)
+      if @task.update(task_params.except!(:amount, :content))
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { head :no_content }
       else
@@ -69,6 +75,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :description, :address, :price, :expirience, :status, :task_type, :content, :exp_require)
+      params.require(:task).permit(:name, :description, :address, :price, :expirience, :status, :task_type, :content, :exp_require, :amount)
     end
 end

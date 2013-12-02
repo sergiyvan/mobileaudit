@@ -40,12 +40,16 @@
     <%= f.text_field :task_type %>
   </div>
   <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_field :content %>
+    <%= f.label :вопросы_задачи %><br>
+    <input id="content" type="text" name="task[content]">
   </div>
   <div class="field">
     <%= f.label :exp_require %><br>
     <%= f.number_field :exp_require %>
+  </div>
+  <div class="field">
+    <%= f.label :количество_раз %><br>
+    <input id="amount" type="text" name="task[amount]">
   </div>
   <div class="actions">
     <%= f.submit %>

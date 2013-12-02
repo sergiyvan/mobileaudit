@@ -1,4 +1,6 @@
 Mobileaudit::Application.routes.draw do
+  resources :task_instances
+
   resources :tasks
 
   # The priority is based upon order of creation: first created -> highest priority.

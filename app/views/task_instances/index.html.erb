@@ -1,0 +1,25 @@
+<h1>Listing task_instances</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @task_instances.each do |task_instance| %>
+      <tr>
+        <td><%= link_to 'Show', task_instance %></td>
+        <td><%= link_to 'Edit', edit_task_instance_path(task_instance) %></td>
+        <td><%= link_to 'Destroy', task_instance, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task instance', new_task_instance_path %>

@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201180928) do
+ActiveRecord::Schema.define(version: 20131202032900) do
+
+  create_table "task_instances", force: true do |t|
+    t.text     "content"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "task_id"
+  end
 
   create_table "tasks", force: true do |t|
     t.string   "name"
@@ -21,10 +29,12 @@ ActiveRecord::Schema.define(version: 20131201180928) do
     t.integer  "expirience"
     t.string   "status"
     t.string   "task_type"
-    t.string   "content"
     t.integer  "exp_require"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
   end
+
+  add_index "tasks", ["group_id"], name: "index_tasks_on_group_id", using: :btree
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131202035154) do
+ActiveRecord::Schema.define(version: 20131203011519) do
 
   create_table "task_instances", force: true do |t|
     t.text     "content"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20131202035154) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.text     "content"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "tasks", ["group_id"], name: "index_tasks_on_group_id", using: :btree

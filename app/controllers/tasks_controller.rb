@@ -10,6 +10,11 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @task = Task.find_by_id(params[:id])
+    @hash = Gmaps4rails.build_markers(@task) do |task, marker|
+      marker.lat task.latitude
+      marker.lng task.longitude
+    end
   end
 
   # GET /tasks/new

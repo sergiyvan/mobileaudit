@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 gem 'geocoder'
 gem 'gmaps4rails'
+gem 'devise'
 
 # Use postgresql as the database for Active Record
 gem 'pg'

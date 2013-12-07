@@ -1,4 +1,5 @@
 Mobileaudit::Application.routes.draw do
+  devise_for :users
   resources :task_instances
 
   resources :tasks

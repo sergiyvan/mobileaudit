@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, :except => [:some_action_without_auth]
+  before_filter :authenticate_user!#, :except => [:some_action_without_auth]
+  skip_load_resource :only => [:create]
+  load_and_authorize_resource
 
   # GET /tasks
   # GET /tasks.json
@@ -30,9 +32,9 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    amount = [task_params[:amount].to_i, 1].max #at least one task should be created
     require 'debugger'
     debugger
+    amount = [task_params[:amount].to_i, 1].max #at least one task should be created
     task_instances_content = task_params[:content]
     @task = Task.new(task_params.except!(:amount))
     amount.times do

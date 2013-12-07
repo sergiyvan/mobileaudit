@@ -5,6 +5,7 @@ gem 'rails', '4.0.0'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'devise'
+gem 'cancan'
 
 # Use postgresql as the database for Active Record
 gem 'pg'

@@ -12,7 +12,7 @@ module TasksHelper
 		tasks.each do |task|
 			ti = task.task_instances.where(status: :created).first
 			if ti.nil?				
-				tasks.delete(task)		
+				tasks = tasks -[task]
 			else
 				task_instances.push(ti)
 			end

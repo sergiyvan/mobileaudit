@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  include TasksHelper
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!#, :except => [:some_action_without_auth]
   skip_load_resource :only => [:create]
@@ -13,7 +14,7 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
-    @task = Task.find_by_id(params[:id])
+    @task = Task.find_by_id(params[:id])   
     @hash = Gmaps4rails.build_markers(@task) do |task, marker|
       marker.lat task.latitude
       marker.lng task.longitude
@@ -72,6 +73,22 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tasks_url }
       format.json { head :no_content }
+    end
+  end
+
+  def show_possible_tasks
+    lat = params[:latitude]
+    long = params[:longitude]
+    respond_to do |format|
+      if !lat.nil? & !long.nil?
+        @tasks = nearbary_tasks(lat, long, distance=10)    
+        #format.html { redirect_to tasks_url }
+        format.json { render json: @tasks }
+
+      else 
+        format.html { redirect_to tasks_path }
+        format.json { render json: 'error', status: :unprocessable_entity }
+      end
     end
   end
 

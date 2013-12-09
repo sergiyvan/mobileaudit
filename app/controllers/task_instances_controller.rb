@@ -40,8 +40,11 @@ class TaskInstancesController < ApplicationController
   # PATCH/PUT /task_instances/1
   # PATCH/PUT /task_instances/1.json
   def update
+
     respond_to do |format|
       if @task_instance.update(task_instance_params)
+        require 'debugger'
+        debugger
         format.html { redirect_to @task_instance, notice: 'Task instance was successfully updated.' }
         format.json { head :no_content }
       else
@@ -69,6 +72,6 @@ class TaskInstancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_instance_params
-      params[:task_instance]
+      params.require(:task_instance).permit(:status, :user_id)
     end
 end

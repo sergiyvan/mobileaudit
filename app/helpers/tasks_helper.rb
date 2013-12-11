@@ -3,8 +3,6 @@ module TasksHelper
 	def nearbary_tasks(latitude, longitude, distance=10)
 		center_point = [latitude, longitude]
 		box = Geocoder::Calculations.bounding_box(center_point, distance)
-		require 'debugger'
-		debugger
 		tasks = filter_by_free_inst(Task.within_bounding_box(box).concat(Task.not_geocoded))
 	end
 

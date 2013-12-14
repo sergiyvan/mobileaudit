@@ -1,5 +1,9 @@
 class TaskInstancesController < ApplicationController
+  include TaskInstancesHelper
   before_action :set_task_instance, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!#, :except => [:some_action_without_auth]
+  skip_load_resource :only => [:create]
+  load_and_authorize_resource
 
   # GET /task_instances
   # GET /task_instances.json
@@ -40,19 +44,24 @@ class TaskInstancesController < ApplicationController
   # PATCH/PUT /task_instances/1
   # PATCH/PUT /task_instances/1.json
   def update
-
     respond_to do |format|
-      if @task_instance.update(task_instance_params)
-        require 'debugger'
-        debugger
-        format.html { redirect_to @task_instance, notice: 'Task instance was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @task_instance.errors, status: :unprocessable_entity }
+      if can_set_status(task_instance_params[:status]) && current_user.role == "agent"
+        @task_instance.user = current_user
+        if @task_instance.update(task_instance_params)
+
+          format.html { redirect_to @task_instance, notice: 'Task instance was successfully updated.' }
+          format.json { render action: 'show', status: :updated, location: @task_instance }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @task_instance.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
+
+  # def my_tasks
+
+  # end
 
   # DELETE /task_instances/1
   # DELETE /task_instances/1.json
@@ -72,6 +81,6 @@ class TaskInstancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_instance_params
-      params.require(:task_instance).permit(:status, :user_id)
+      params.require(:task_instance).permit(:status, :content)
     end
 end

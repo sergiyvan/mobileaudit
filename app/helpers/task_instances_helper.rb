@@ -1,7 +1,6 @@
 module TaskInstancesHelper
 
 	STATUS_AGENT = [
-		"created",
 		"in_progress",
 		"ready"
 	]

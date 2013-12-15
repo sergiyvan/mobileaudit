@@ -12,6 +12,9 @@ class Ability
       can :manage, :all
     elsif user.role? 'agent'
       can :agent_actions, :all
+      can :take, TaskInstance
+      can :cancel, TaskInstance
+      can :update_changes_agent, TaskInstance
     end
 
 

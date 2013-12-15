@@ -2,7 +2,9 @@ Mobileaudit::Application.routes.draw do
   #devise_for :users
   devise_for :users, :controllers => {:sessions => 'sessions', only: [:create]}
 
-  get 'task_instances/update_task/:id', to: 'task_instances#update'
+  post 'task_instances/take/:id', to: 'task_instances#take'
+  post 'task_instances/cancel/:id', to: 'task_instances#cancel'
+  post 'task_instances/update_changes_agent/:id', to: 'task_instances#update_changes_agent'
   resources :task_instances
 
   get 'tasks/show_possible_tasks', to: 'tasks#show_possible_tasks'

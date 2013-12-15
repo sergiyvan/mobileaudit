@@ -1,6 +1,9 @@
 class TaskInstancesController < ApplicationController
   include TaskInstancesHelper
-  before_action :set_task_instance, only: [:show, :edit, :update, :destroy]
+  before_action :set_task_instance, only: [:show, :edit, :update, :destroy, :update_changes_agent, :take]
+  before_filter :free_task_instance?, only: [:take]
+  before_filter :my_task_instance?, only: [:cancel]
+  before_filter :permited_cahnges?, only: [:update_changes_agent]
   before_filter :authenticate_user!#, :except => [:some_action_without_auth]
   skip_load_resource :only => [:create]
   load_and_authorize_resource
@@ -45,18 +48,41 @@ class TaskInstancesController < ApplicationController
   # PATCH/PUT /task_instances/1.json
   def update
     respond_to do |format|
-      if can_set_status(task_instance_params[:status]) && current_user.role == "agent"
-        @task_instance.user = current_user
         if @task_instance.update(task_instance_params)
-
           format.html { redirect_to @task_instance, notice: 'Task instance was successfully updated.' }
           format.json { render action: 'show', status: :updated, location: @task_instance }
         else
           format.html { render action: 'edit' }
           format.json { render json: @task_instance.errors, status: :unprocessable_entity }
         end
-      end
     end
+  end
+
+  def update_changes_agent
+      if @task_instance.update(task_instance_params)
+        render action: 'show', status: 200, location: @task_instance
+      end
+  end
+
+  def take
+      @task_instance.status="in_progress"
+      @task_instance.user = current_user
+      if @task_instance.save
+          render action: 'show', status: 200, location: @task_instance
+      else
+          render json: @task_instance.errors, status: :unprocessable_entity
+      end
+  end
+
+  def cancel
+      @task_instance.status="created"
+      @task_instance.user = nil
+      @task_instance.content = @task_instance.task.content
+      if @task_instance.save
+          render action: 'show', status: 200, location: @task_instance
+      else
+          render json: @task_instance.errors, status: :unprocessable_entity
+      end
   end
 
   # def my_tasks
@@ -77,6 +103,20 @@ class TaskInstancesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task_instance
       @task_instance = TaskInstance.find(params[:id])
+    end
+
+    def free_task_instance?
+      render json: {status: :allready_taken}, status: 500 if !TaskInstance.find(params[:id]).user.nil?
+    end
+
+    def my_task_instance?
+      render json: {status: :its_not_yours}, status: 500 if TaskInstance.find(params[:id]).user != current_user
+    end
+
+    def permited_cahnges?
+      if !(@task_instance.user == current_user && (can_set_status(task_instance_params[:status]) || task_instance_params[:status].nil?))
+        render json: {status: :unpermitted_update}, status: 500
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

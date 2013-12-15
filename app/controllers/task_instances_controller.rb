@@ -85,9 +85,10 @@ class TaskInstancesController < ApplicationController
       end
   end
 
-  # def my_tasks
-
-  # end
+  def my_tasks
+      @task_instances = user_tasks(current_user)
+      render json: @task_instances
+  end
 
   # DELETE /task_instances/1
   # DELETE /task_instances/1.json

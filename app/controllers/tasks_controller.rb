@@ -84,10 +84,9 @@ class TasksController < ApplicationController
         @tasks = nearbary_tasks(lat, long, distance=10)    
         #format.html { redirect_to tasks_url }
         format.json { render json: @tasks }
-
       else 
         format.html { redirect_to tasks_path }
-        format.json { render json: 'error', status: :unprocessable_entity }
+        format.json { render json: {status: :oooops}, status: :unprocessable_entity }
       end
     end
   end

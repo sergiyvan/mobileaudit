@@ -13,7 +13,18 @@ Mobileaudit::Application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.action_mailer.default_url_options = { :host => "mobileaudit.herokuapp.com" }
+  # Don't care if the mailer can't send.
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.yandex.ru",
+    :port                 => 587,
+    :domain               => "checklines.pro",
+    :user_name            => "support@checklines.pro",
+    :password             => "alex87",
+    :authentication       => :login,
+    :enable_starttls_auto => true
+  }
+  config.action_mailer.default_url_options = { :host => "checklines.pro" }
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.

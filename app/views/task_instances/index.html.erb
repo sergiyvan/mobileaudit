@@ -16,10 +16,10 @@
   <tbody>
     <% @task_instances.each do |task_instance| %>
       <tr>
-        <td><%= task_instance.status %></td>
+        <td><%= task_instance.status.humanize %></td>
         <td><%= task_instance.updated_at %></td>
-        <td><%= task_instance.task_id %></td>
-        <td><%= task_instance.user_id %></td>
+        <td><%= task_instance.task_id.to_i %></td>
+        <td><%= task_instance.user_id.to_i %></td>
         <td><%= link_to 'Show', task_instance %></td>
         <td><%= link_to 'Edit', edit_task_instance_path(task_instance) %></td>
         <td><%= link_to 'Destroy', task_instance, method: :delete, data: { confirm: 'Are you sure?' } %></td>

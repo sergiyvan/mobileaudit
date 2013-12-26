@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131225170946) do
+ActiveRecord::Schema.define(version: 20131226122634) do
 
   create_table "task_instances", force: true do |t|
     t.text     "content"
@@ -57,6 +57,9 @@ ActiveRecord::Schema.define(version: 20131225170946) do
     t.string   "gender"
     t.string   "phone"
     t.date     "birthday"
+    t.integer  "exp"
+    t.integer  "credit"
+    t.integer  "yandex"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
 	protected	  
 	  def configure_permitted_parameters
-	  	additional_user_params = [:name, :lastname, :gender, :phone, :birthday]
+	  	additional_user_params = [:name, :lastname, :gender, :phone, :birthday, :yandex]
 	  	additional_user_params.each do |param|
 	    	devise_parameter_sanitizer.for(:sign_up) << param
 	    end

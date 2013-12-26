@@ -78,6 +78,7 @@ class TaskInstancesController < ApplicationController
       @task_instance.status="created"
       @task_instance.user = nil
       @task_instance.content = @task_instance.task.content
+      @task_instance.comment = ""
       if @task_instance.save
           render action: 'show', status: 200, location: @task_instance
       else
@@ -122,6 +123,6 @@ class TaskInstancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_instance_params
-      params.require(:task_instance).permit(:status, :content)
+      params.require(:task_instance).permit(:status, :content, :comment)
     end
 end

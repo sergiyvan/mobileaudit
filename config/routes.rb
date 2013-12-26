@@ -1,5 +1,5 @@
 Mobileaudit::Application.routes.draw do
-  get "user/my_user_data"
+  get "users/my_user_data"
   #devise_for :users
   devise_for :users, :controllers => {:sessions => 'sessions', only: [:create]}
 

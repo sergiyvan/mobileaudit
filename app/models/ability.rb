@@ -3,7 +3,7 @@ class Ability
 
   def initialize(user)
 
-    alias_action :read, :show_possible_tasks, :to => :agent_actions
+    #alias_action :read, :show_possible_tasks, :to => :agent_actions
 
     user ||= User.new # guest user (not logged in)
     if user.role? 'admin'
@@ -11,7 +11,8 @@ class Ability
     elsif user.role? 'operator'
       can :manage, :all
     elsif user.role? 'agent'
-      #can :agent_actions, :all
+      can :read, Task
+      can :show_possible_tasks, Task
       can :take, TaskInstance
       can :cancel, TaskInstance
       can :update_changes_agent, TaskInstance

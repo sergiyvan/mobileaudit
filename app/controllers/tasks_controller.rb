@@ -33,8 +33,6 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    require 'debugger'
-    debugger
     amount = [task_params[:amount].to_i, 1].max #at least one task should be created
     task_instances_content = task_params[:content]
     @task = Task.new(task_params.except!(:amount))
@@ -44,6 +42,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
+        set_task_content()
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render action: 'show', status: :created, location: @task }
       else
@@ -97,6 +96,26 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
+    end
+
+    def set_task_content
+      params[:task_step].each do |quest|
+        uploads = quest[:file]
+        dir = Rails.root.join('public', 'uploads', @task.id.to_s)
+        FileUtils.mkdir_p(dir) unless File.directory?(dir)
+        rel_paths = Array.new
+        uploads.each do |up|
+          File.open(dir.join(up.original_filename), 'wb') do |file|
+            file_path = dir.join(up.original_filename).to_s
+            public_path = Rails.root.join('public').to_s
+            relative_path = file_path.sub(/^#{public_path}\//, '')
+            file.write(up.read)
+            rel_paths << relative_path
+          end
+        end
+        quest[:file]=rel_paths
+        @task.update(content: params[:task_step])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

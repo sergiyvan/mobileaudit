@@ -3,10 +3,11 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Status</th>
       <th>Updated At</th>
       <th>Task ID</th>
-      <th>Agent</th>
+      <th>Agent ID</th>
       <th></th>
       <th></th>
       <th></th>
@@ -16,6 +17,7 @@
   <tbody>
     <% @task_instances.each do |task_instance| %>
       <tr>
+        <td><%= task_instance.id.to_i %></td>
         <td><%= task_instance.status.humanize %></td>
         <td><%= task_instance.updated_at %></td>
         <td><%= task_instance.task_id.to_i %></td>

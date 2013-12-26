@@ -11,6 +11,16 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.select(:status, options_for_select([[:Создан, :created], [:Выполняеться, :in_progress], 
+    [:Готов, :ready],[:Завершен, :finished], [:Переделать, :to_rework], [:Оплачен, :paid]], @task_instance.status)) %>
+  </div>
+  <div class="field">
+    <%= f.label :comment, "коментарий" %><br>
+    <%= f.text_area :comment %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

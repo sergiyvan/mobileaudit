@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131226124148) do
+ActiveRecord::Schema.define(version: 20131226150009) do
 
   create_table "task_instances", force: true do |t|
     t.text     "content"
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 20131226124148) do
     t.string   "gender"
     t.string   "phone"
     t.date     "birthday"
-    t.integer  "exp"
-    t.integer  "credit"
+    t.integer  "exp",                    default: 0
+    t.integer  "credit",                 default: 0
     t.integer  "yandex"
   end
 

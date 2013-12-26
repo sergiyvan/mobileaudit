@@ -9,8 +9,9 @@ module TaskInstancesHelper
 		"created",
 		"in_progress",
 		"ready",
-		"done",
-		"pay_out"
+		"finished",
+		"paid",
+		"to_rework"
 	]
 
 	def can_set_status(status)

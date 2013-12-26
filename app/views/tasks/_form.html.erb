@@ -1,57 +1,81 @@
-<%= form_for(@task) do |f| %>
-  <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "tasks" %>
+<% end %>
+<head>
+  <%= yield :javascript_includes %>
+</head>
+<div id="operator_box">
+  <%= form_for @task, :html => { :multipart => true, :autocomplete => "on", :encoding => "multipart/form-data" }  do |f| %>
+    <% if @task.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
-      <ul>
-      <% @task.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @task.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :description %><br>
+      <%= f.text_area :description %>
+    </div>
+
+        <!--
+    <div class="field">
+      <label for="task_cover">Cover</label><br>
+      <input type="file" accept="image/*" id="task_cover" name="task[cover]" />
+    </div>
+    -->
+
+    <div class="field">
+      <%= f.label :address %><br>
+      <%= f.text_area :address %>
+    </div>
+    <div class="field">
+      <%= f.label :price %><br>
+      <%= f.number_field :price %>
+    </div>
+    <div class="field">
+      <%= f.label :expirience %><br>
+      <%= f.number_field :expirience %>
+    </div>
+    <div class="field">
+      <%= f.label :status %><br>
+      <%= f.text_field :status %>
+    </div>
+    <div class="field">
+      <%= f.label :task_type %><br>
+      <%= f.text_field :task_type %>
+    </div>
+  <!--  <div class="field">
+      <%= f.label :content %><br>
+      <%= f.text_area :content %>
+    </div>
+  -->
+
+    <div class="field" id="task_steps">
+      <h3 class="task_steps_count">Подзадачи/шаги ( текущее кол-во: 0 )</h3>
+      <input type="button" onclick="taskStepPut(this)" value="Добавить подзадачу" />
+    <!--<label for="task_content">Content</label><br><textarea id="task_content" name="task[content]"></textarea>-->
+    </div>
+
+    <div class="field">
+      <%= f.label :exp_require %><br>
+      <%= f.number_field :exp_require %>
+    </div>
+    <div class="field">
+      <%= f.label :amount, "количество раз" %><br>
+      <input id="task_amount" type="text" name="task[amount]">
+    </div>
+    <div class="actions">
+      <%= f.submit %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_area :address %>
-  </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.number_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label :expirience %><br>
-    <%= f.number_field :expirience %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :task_type %><br>
-    <%= f.text_field :task_type %>
-  </div>
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
-  <div class="field">
-    <%= f.label :exp_require %><br>
-    <%= f.number_field :exp_require %>
-  </div>
-  <div class="field">
-    <%= f.label :amount, "количество раз" %><br>
-    <input id="task_amount" type="text" name="task[amount]">
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

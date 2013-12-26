@@ -1,3 +1,14 @@
 // Place all the styles related to the Tasks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#operator_box { margin:40px; }
+#operator_box input{ margin:0; padding:2px; vertical-align:middle }
+#task_steps { padding:20px; border:1px dashed gray; margin:20px 0 }
+#task_steps h3 { margin:0;padding:0 }
+.task_step>div { margin:5px 0 }
+.task_step { margin:20px; background:#eee; padding:10px }
+.task_step_cut { float:right }
+.task_step textarea { width:100%; }
+.task_step .task_answers>div { margin:5px; }
+#operator_box .task_step .task_answers>div>input:first-child { width:50%; margin-right:10px; }

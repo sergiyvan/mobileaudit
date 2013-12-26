@@ -33,6 +33,8 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
+    require 'debugger'
+    debugger
     amount = [task_params[:amount].to_i, 1].max #at least one task should be created
     task_instances_content = task_params[:content]
     @task = Task.new(task_params.except!(:amount))

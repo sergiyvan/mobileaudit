@@ -105,13 +105,15 @@ class TasksController < ApplicationController
           dir = Rails.root.join('public', 'uploads', @task.id.to_s)
           FileUtils.mkdir_p(dir) unless File.directory?(dir)
           rel_paths = Array.new
-          uploads.each do |up|
-            File.open(dir.join(up.original_filename), 'wb') do |file|
-              file_path = dir.join(up.original_filename).to_s
-              public_path = Rails.root.join('public').to_s
-              relative_path = file_path.sub(/^#{public_path}\//, '')
-              file.write(up.read)
-              rel_paths << relative_path
+          if !uploads.nil?
+            uploads.each do |up|
+              File.open(dir.join(up.original_filename), 'wb') do |file|
+                file_path = dir.join(up.original_filename).to_s
+                public_path = Rails.root.join('public').to_s
+                relative_path = file_path.sub(/^#{public_path}\//, '')
+                file.write(up.read)
+                rel_paths << relative_path
+              end
             end
           end
           quest[:file]=rel_paths

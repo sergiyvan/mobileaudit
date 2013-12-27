@@ -91,6 +91,11 @@ class TaskInstancesController < ApplicationController
       render json: @task_instances
   end
 
+  def my_statistic
+      @statistic = user_statistic(current_user)
+      render json: @statistic
+  end
+
   # DELETE /task_instances/1
   # DELETE /task_instances/1.json
   def destroy

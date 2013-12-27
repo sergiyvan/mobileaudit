@@ -28,4 +28,19 @@ module TaskInstancesHelper
 		end
 		return tasks, task_instances
 	end
+
+	def user_statistic(user)
+		tis_today_ready = TaskInstance.where("DATE(updated_at) = DATE(?) AND user_id = ? AND status = ?", Time.zone.now.beginning_of_day, user.id, :ready).count
+		tis_today_finished = TaskInstance.where("DATE(updated_at) = DATE(?) AND user_id = ? AND status = ?", Time.zone.now.beginning_of_day, user.id, :finished).count
+		tis_today_torework = TaskInstance.where("DATE(updated_at) = DATE(?) AND user_id = ? AND status = ?", Time.zone.now.beginning_of_day, user.id, :to_rework).count
+		tis_week_ready = TaskInstance.where("DATE(updated_at) >= DATE(?) AND user_id = ? AND status = ?", 1.week.ago, user.id, :ready).count
+		tis_week_finished = TaskInstance.where("DATE(updated_at) >= DATE(?) AND user_id = ? AND status = ?", 1.week.ago, user.id, :finished).count
+		tis_week_torework = TaskInstance.where("DATE(updated_at) >= DATE(?) AND user_id = ? AND status = ?", 1.week.ago, user.id, :to_rework).count
+		tis_month_ready = TaskInstance.where("DATE(updated_at) >= ? AND user_id = ? AND status = ?", 1.month.ago, user.id, :ready).count
+		tis_month_finished = TaskInstance.where("DATE(updated_at) >= ? AND user_id = ? AND status = ?", 1.month.ago, user.id, :finished).count
+		tis_month_torework = TaskInstance.where("DATE(updated_at) >= ? AND user_id = ? AND status = ?", 1.month.ago, user.id, :to_rework).count
+		return {tis_today_ready: tis_today_ready, tis_today_finished: tis_today_finished, tis_today_torework: tis_today_torework, 
+			tis_week_ready: tis_week_ready, tis_week_finished: tis_week_finished, tis_week_torework: tis_week_torework,
+			tis_month_ready: tis_month_ready, tis_month_finished: tis_month_finished, tis_month_torework: tis_month_torework }
+	end
 end

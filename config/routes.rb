@@ -7,6 +7,7 @@ Mobileaudit::Application.routes.draw do
   post 'task_instances/cancel/:id', to: 'task_instances#cancel'
   post 'task_instances/update_changes_agent/:id', to: 'task_instances#update_changes_agent'
   get  'task_instances/my_tasks', to: 'task_instances#my_tasks'
+  get  'task_instances/my_statistic', to: 'task_instances#my_statistic'
   resources :task_instances
 
   get 'tasks/show_possible_tasks', to: 'tasks#show_possible_tasks'

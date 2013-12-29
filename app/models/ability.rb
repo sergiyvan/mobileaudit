@@ -17,6 +17,7 @@ class Ability
       can :cancel, TaskInstance
       can :update_changes_agent, TaskInstance
       can :my_tasks, TaskInstance
+      can :my_statistic, TaskInstance
     end
 
 

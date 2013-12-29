@@ -6,6 +6,7 @@ gem 'geocoder'
 gem 'gmaps4rails'
 gem 'devise'
 gem 'cancan'
+gem 'aws-sdk'
 
 # Use postgresql as the database for Active Record
 gem 'pg'

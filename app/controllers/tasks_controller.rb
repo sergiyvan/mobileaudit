@@ -98,25 +98,51 @@ class TasksController < ApplicationController
       @task = Task.find(params[:id])
     end
 
+    # def set_task_content
+    #   if !params[:task_step].nil?
+    #     params[:task_step].each do |quest|
+    #       uploads = quest[:file]
+    #       dir = Rails.root.join('public', 'uploads', @task.id.to_s)
+    #       FileUtils.mkdir_p(dir) unless File.directory?(dir)
+    #       rel_paths = Array.new
+    #       if !uploads.nil?
+    #         uploads.each do |up|
+
+    #         s3 = AWS::S3.new
+    #         require 'debugger'
+    #         debugger
+
+    #           File.open(dir.join(up.original_filename), 'wb') do |file|
+    #             file_path = dir.join(up.original_filename).to_s
+    #             public_path = Rails.root.join('public').to_s
+    #             relative_path = file_path.sub(/^#{public_path}\//, '')
+    #             file.write(up.read)
+    #             rel_paths << relative_path
+    #           end
+    #         end
+    #       end
+    #       quest[:file]=rel_paths
+    #       @task.update(content: params[:task_step])
+    #     end
+    #   end
+    # end
+
     def set_task_content
       if !params[:task_step].nil?
         params[:task_step].each do |quest|
           uploads = quest[:file]
-          dir = Rails.root.join('public', 'uploads', @task.id.to_s)
-          FileUtils.mkdir_p(dir) unless File.directory?(dir)
-          rel_paths = Array.new
+          prefix = @task.id.to_s
+          file_urls = Array.new
           if !uploads.nil?
             uploads.each do |up|
-              File.open(dir.join(up.original_filename), 'wb') do |file|
-                file_path = dir.join(up.original_filename).to_s
-                public_path = Rails.root.join('public').to_s
-                relative_path = file_path.sub(/^#{public_path}\//, '')
-                file.write(up.read)
-                rel_paths << relative_path
-              end
+
+              s3 = AWS::S3.new
+              file_path = Pathname.new(prefix).join(up.original_filename).to_s
+              file_url = s3.buckets['checklinestorage'].objects[file_path].write(up.read).url_for(:read)
+              file_urls << file_url.to_s
             end
           end
-          quest[:file]=rel_paths
+          quest[:file]=file_urls
           @task.update(content: params[:task_step])
         end
       end

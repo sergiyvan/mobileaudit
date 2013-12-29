@@ -135,7 +135,6 @@ class TasksController < ApplicationController
           file_urls = Array.new
           if !uploads.nil?
             uploads.each do |up|
-
               s3 = AWS::S3.new
               file_path = Pathname.new(prefix).join(up.original_filename).to_s
               file_url = s3.buckets['checklinestorage'].objects[file_path].write(up.read).url_for(:read)
@@ -143,8 +142,8 @@ class TasksController < ApplicationController
             end
           end
           quest[:file]=file_urls
-          @task.update(content: params[:task_step])
         end
+        @task.update(content: params[:task_step])
       end
     end
 

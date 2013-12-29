@@ -1,6 +1,7 @@
 class TaskInstance < ActiveRecord::Base
 	belongs_to :task
 	belongs_to :user
+	serialize :content
 
 	def finish
 		self.update(status: :finished)

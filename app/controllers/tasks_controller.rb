@@ -34,15 +34,13 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     amount = [task_params[:amount].to_i, 1].max #at least one task should be created
-    task_instances_content = task_params[:content]
     @task = Task.new(task_params.except!(:amount))
-    amount.times do
-      @task.task_instances.new(content: task_instances_content, status: :created)
-    end
-
     respond_to do |format|
       if @task.save
         set_task_content()
+        amount.times do
+          @task.task_instances.create(content: @task.content, status: :created)
+        end
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render action: 'show', status: :created, location: @task }
       else

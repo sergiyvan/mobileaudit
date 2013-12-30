@@ -8,10 +8,32 @@ Mobileaudit::Application.routes.draw do
   post 'task_instances/update_changes_agent/:id', to: 'task_instances#update_changes_agent'
   get  'task_instances/my_tasks', to: 'task_instances#my_tasks'
   get  'task_instances/my_statistic', to: 'task_instances#my_statistic'
+  post 'task_instances/:id/finished', to: 'task_instances#finished'
   resources :task_instances
 
   get 'tasks/show_possible_tasks', to: 'tasks#show_possible_tasks'
   resources :tasks
+
+# Better way!!!!!!!!!! TODO
+  resources :task_instances do
+  #   collection do
+  #     get  :my_tasks
+  #     get  :my_statistic
+  #   end
+    member do
+  #     post :take
+  #     post :cancel
+  #     post :update_changes_agent
+      get :finished
+    end
+  end
+
+  # resources :tasks do
+  #   collection do
+  #     get :show_possible_tasks
+  #   end
+  # end
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,6 +1,6 @@
 class TaskInstancesController < ApplicationController
   include TaskInstancesHelper
-  before_action :set_task_instance, only: [:show, :edit, :update, :destroy, :update_changes_agent, :take]
+  before_action :set_task_instance, only: [:show, :edit, :update, :destroy, :update_changes_agent, :take, :finished]
   before_filter :free_task_instance?, only: [:take]
   before_filter :my_task_instance?, only: [:cancel]
   before_filter :permited_cahnges?, only: [:update_changes_agent]
@@ -94,6 +94,15 @@ class TaskInstancesController < ApplicationController
   def my_statistic
       @statistic = user_statistic(current_user)
       render json: @statistic
+  end
+
+  def finished
+    if can_set_status('finished') && @task_instance.status != 'finished'
+      @task_instance.finish 
+      redirect_to @task_instance, notice: 'Task instance was successfully updated.' 
+    else
+      redirect_to @task_instance, notice: 'Permission error'
+    end
   end
 
   # DELETE /task_instances/1

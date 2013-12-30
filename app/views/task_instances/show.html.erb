@@ -27,8 +27,14 @@
 
 <p>
   <strong>Agent ID:</strong>
-  <%= @task_instance.user_id %>
+  <%= @task_instance.user_id.to_i %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @task_instance.comment %>
 </p>
 
 <%= link_to 'Edit', edit_task_instance_path(@task_instance) %> |
+<%= link_to 'Finished', finished_task_instance_path(@task_instance) %> |
 <%= link_to 'Back', task_instances_path %>

@@ -6,11 +6,7 @@ class TaskInstance < ActiveRecord::Base
 	def finish
 		self.update(status: :finished)
 		agent = self.user
-		agent.update(credit: self.param(:price)+agent.credit, exp: self.param(:expirience)+agent.exp)
+		agent.update(credit: self.task.price+agent.credit, exp: self.task.expirience+agent.exp)
 	end
 
-	def param(param)
-		return self.task.attributes if param == 'all'
-		return self.task.attributes[param]
-	end
 end

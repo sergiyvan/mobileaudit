@@ -59,12 +59,59 @@
       <%= f.text_area :content %>
     </div>
   -->
+    <% if current_page?(new_task_path) %>
+      <div class="field" id="task_steps">
+         <h3 class="task_steps_count">Подзадачи/шаги ( текущее кол-во: 0 )</h3>
+         <input type="button" onclick="taskStepPut(this)" value="Добавить подзадачу" />
+      </div>
 
-    <div class="field" id="task_steps">
-      <h3 class="task_steps_count">Подзадачи/шаги ( текущее кол-во: 0 )</h3>
-      <input type="button" onclick="taskStepPut(this)" value="Добавить подзадачу" />
-    <!--<label for="task_content">Content</label><br><textarea id="task_content" name="task[content]"></textarea>-->
-    </div>
+    <% elsif current_page?(edit_task_path) %>
+      <div class="field" id="task_steps">
+        <h3 class="task_steps_count">Подзадачи/шаги ( текущее кол-во: <%= @task.content.size %> )</h3>
+
+          <div class="task_step">
+            <% @task.content.each_with_index do |quest, i| %>
+                  <input class="task_step_cut" type="button" onclick="taskStepCut(this)" value="Удалить данную подзадачу" />
+                  <div class="task_step_numer">Номер шага: <%= i %></div>
+                  <div>Тип подзадачи:
+                         <%= select_tag("task_step[][type]", options_for_select([["Предопределенные ответы", 0], ["Фотоответ(снимок с камеры)", 1], ["Ответ в свободной форме", 2]], quest[:type]), onchange: "taskTypeTurn(this)") %>
+                  </div>
+
+                  <div class="task_step_files">
+                    <input class="task_step_file_delete" type="hidden" name="task_step[][file_delete]" />
+                    <% unless quest[:file].nil? %>
+                      <% quest[:file].each_with_index do |qfile, k| %>
+                        <div>
+                          <%= image_tag(qfile, id: "task_image_#{k}") %><%= button_tag "Удалить данный файл", onclick: "taskStepFileCut(this)", type: :button %><%= hidden_field_tag("task_step[][file_saved][]",qfile, id: "task_hidden_#{k}")%>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+                  <div>Приложить иллюстрации или файлы к подзадаче: <input type="file" name="task_step[][file][]" multiple="true" min="1" max="12" /></div>
+                  <div>Описание подзадачи/вопрос:
+                    <textarea name="task_step[][question]"><%= quest[:question] %></textarea>
+                  </div>
+
+                  <div class="task_step_answers"  style="<%= 'display:none;' if quest[:type]!=0 %>" >Предопределенные ответы:<br />
+                    <% unless quest[:answer].nil? %>
+                       <div>
+                          <% quest[:answer].each_with_index do |qanswer, j| %>
+                            <div><%= text_field(qanswer, "task_step[][answer][]", value: "Answer" + j.to_s) %>
+                              <%= button_tag "Удалить данный вариант ответа", onclick: "taskStepAnswerCut(this)", type: :button %></div>
+                          <% end %>
+                       </div>
+                    <% end %>
+                    <%= button_tag "Добавить вариант ответа", onclick: "taskStepAnswerPut(this)", type: :button %>
+                  </div>
+
+            <% end %>
+          </div>
+
+        <input type="button" onclick="taskStepPut(this)" value="Добавить подзадачу" />
+      <!--<label for="task_content">Content</label><br><textarea id="task_content" name="task[content]"></textarea>-->
+      </div>
+    <% end %>
 
     <div class="field">
       <%= f.label :exp_require %><br>

@@ -56,6 +56,12 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params.except!(:amount, :content))
+        require 'debugger'
+        debugger
+        set_task_content()
+        @task.task_instances.each do |ti|
+          ti.update(content: @task.content)
+        end
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { head :no_content }
       else
@@ -129,17 +135,20 @@ class TasksController < ApplicationController
       if !params[:task_step].nil?
         params[:task_step].each do |quest|
           uploads = quest[:file]
-          prefix = @task.id.to_s
+          prefix = Pathname.new(Rails.env).join(@task.id.to_s)
           file_urls = Array.new
           if !uploads.nil?
             uploads.each do |up|
               s3 = AWS::S3.new
-              file_path = Pathname.new(prefix).join(up.original_filename).to_s
+              file_path = prefix.join(up.original_filename).to_s
               file_url = s3.buckets['checklinestorage'].objects[file_path].write(up.read).url_for(:read, expires: 1.year.from_now)
               file_urls << file_url.to_s
             end
           end
           quest[:file]=file_urls
+          require 'debugger'
+          debugger
+          quest[:file] += quest[:file_saved] unless quest[:file_saved].nil?
         end
         @task.update(content: params[:task_step])
       end

@@ -10,7 +10,5 @@
 .task_step { margin:20px; background:#eee; padding:10px }
 .task_step_cut { float:right }
 .task_step textarea { width:100%; }
-.task_step .task_step_answers>div { margin:5px; }
-#operator_box .task_step .task_step_answers>div>input:first-child { width:50%; margin-right:10px; }
-/*************************/
-.task_step .prop_name { font-weight:bold }
+.task_step .task_answers>div { margin:5px; }
+#operator_box .task_step .task_answers>div>input:first-child { width:50%; margin-right:10px; }

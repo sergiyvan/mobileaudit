@@ -65,7 +65,7 @@
         <% unless quest[:answer].nil? %>
           <ul>
             <% quest[:answer].each do |qanswer| %>
-              <li><% qanswer %></li>
+              <li><%= qanswer %></li>
             <% end %>
           </ul>
         <% else %>

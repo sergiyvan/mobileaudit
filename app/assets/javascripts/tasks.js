@@ -30,6 +30,12 @@ function taskStepAnswerCut( dom ){
   domAnswer.remove?domAnswer.remove():(domAnswer.outerHTML='');
 };
 
+function taskStepFileCut( dom ){
+  var domFileS = dom.parentNode.parentNode, input = domFileS.getElementsByClassName('task_step_file_delete')[0], file = dom.previousSibling;
+  input.value+=(input.value?'|||':'')+file.src;
+  dom.parentNode.remove?dom.parentNode.remove():(dom.parentNode.outerHTML='');
+};
+
 /// добавление очередной подзадачи(шага)
 function taskStepPut(dom){
   var mold = '\

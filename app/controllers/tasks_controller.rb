@@ -56,8 +56,6 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params.except!(:amount, :content))
-        require 'debugger'
-        debugger
         set_task_content()
         @task.task_instances.each do |ti|
           ti.update(content: @task.content)
@@ -146,8 +144,6 @@ class TasksController < ApplicationController
             end
           end
           quest[:file]=file_urls
-          require 'debugger'
-          debugger
           quest[:file] += quest[:file_saved] unless quest[:file_saved].nil?
         end
         @task.update(content: params[:task_step])

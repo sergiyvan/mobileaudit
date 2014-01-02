@@ -59,8 +59,6 @@ class TaskInstancesController < ApplicationController
   end
 
   def update_changes_agent
-      require 'debugger'
-      debugger
       if @task_instance.update(task_instance_params)
         render action: 'show', status: 200, location: @task_instance
       end

@@ -1,6 +1,7 @@
 class TaskInstance < ActiveRecord::Base
 	belongs_to :task
 	belongs_to :user
+	belongs_to :payout
 	serialize :content
 
 	def finish

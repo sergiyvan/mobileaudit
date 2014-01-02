@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131226150009) do
+ActiveRecord::Schema.define(version: 20140102104816) do
+
+  create_table "payouts", force: true do |t|
+    t.integer  "price"
+    t.string   "status",     default: "open"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  add_index "payouts", ["user_id"], name: "index_payouts_on_user_id", using: :btree
 
   create_table "task_instances", force: true do |t|
     t.text     "content"
@@ -21,7 +31,10 @@ ActiveRecord::Schema.define(version: 20131226150009) do
     t.integer  "task_id"
     t.integer  "user_id"
     t.text     "comment",    default: ""
+    t.integer  "payout_id"
   end
+
+  add_index "task_instances", ["payout_id"], name: "index_task_instances_on_payout_id", using: :btree
 
   create_table "tasks", force: true do |t|
     t.string   "name"

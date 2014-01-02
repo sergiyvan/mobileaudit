@@ -1,0 +1,33 @@
+<h1>Listing payouts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Price</th>
+      <th>Agent email</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @payouts.each do |payout| %>
+      <tr>
+        <td><%= payout.id %></td>
+        <td><%= payout.status %></td>
+        <td><%= payout.price %></td>
+        <td><%= payout.user.email %></td>
+        <td><%= link_to 'Show', payout %></td>
+        <td><%= link_to 'Edit', edit_payout_path(payout) %></td>
+        <td><%= link_to 'Destroy', payout, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<!-- <%= link_to 'New Payout', new_payout_path %>  -->

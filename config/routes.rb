@@ -36,6 +36,8 @@ Mobileaudit::Application.routes.draw do
 
   resources :payouts
 
+  root to: redirect('/tasks')
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

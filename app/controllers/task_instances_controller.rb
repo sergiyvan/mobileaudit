@@ -131,7 +131,7 @@ class TaskInstancesController < ApplicationController
     end
 
     def cancellable?
-      status = TaskInstance.find(params[:id]).status
+      status = TaskInstance.find(params[:id]).status.to_sym
       if status == :finished || status == :paid
         render json: {status: :unpermitted_update}, status: 500
       end

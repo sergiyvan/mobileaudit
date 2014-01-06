@@ -3,6 +3,7 @@ class TaskInstancesController < ApplicationController
   before_action :set_task_instance, only: [:show, :edit, :update, :destroy, :update_changes_agent, :take, :finished]
   before_filter :free_task_instance?, only: [:take]
   before_filter :my_task_instance?, only: [:cancel]
+  before_filter :cancellable?, only: [:cancel]
   before_filter :permited_cahnges?, only: [:update_changes_agent]
   before_filter :authenticate_user!#, :except => [:some_action_without_auth]
   skip_load_resource :only => [:create]
@@ -127,6 +128,13 @@ class TaskInstancesController < ApplicationController
 
     def my_task_instance?
       render json: {status: :its_not_yours}, status: 500 if TaskInstance.find(params[:id]).user != current_user
+    end
+
+    def cancellable?
+      status = TaskInstance.find(params[:id]).status
+      if status == :finished || status == :paid
+        render json: {status: :unpermitted_update}, status: 500
+      end
     end
 
     def permited_cahnges?

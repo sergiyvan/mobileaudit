@@ -64,7 +64,7 @@ class TaskInstancesController < ApplicationController
       @task_instance.status = task_instance_params[:status]
       params[:task_step].each_with_index do |quest, i|
         if @task_instance.content[i][:type].to_i == 1
-          update_ti_answer_file(i)
+          @task_instance.content[i][:answer] = update_ti_answer_file(quest[1][:answer])
         else
           @task_instance.content[i][:answer] = quest[1][:answer]
         end
@@ -153,11 +153,11 @@ class TaskInstancesController < ApplicationController
       end
     end
 
-    def update_ti_answer_file(name)
+    def update_ti_answer_file(file)
       prefix = Pathname.new(Rails.env).join(@task_instance.task.id.to_s, 'answer_file')
       s3 = AWS::S3.new
-      file_path = prefix.join(name).to_s
-      file_url = s3.buckets['checklinestorage'].objects[file_path].write(up.read).url_for(:read, expires: 1.year.from_now)
+      file_path = prefix.join(file.original_filename).to_s
+      file_url = s3.buckets['checklinestorage'].objects[file_path].write(file.read).url_for(:read, expires: 1.year.from_now)
     end
 
 

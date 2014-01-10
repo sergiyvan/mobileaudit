@@ -60,6 +60,7 @@ class TaskInstancesController < ApplicationController
   end
 
   def update_changes_agent
+      puts params
       @task_instance.status = task_instance_params[:status]
       params[:task_step].each_with_index do |quest, i|
         if @task_instance.content[i][:type].to_i == 1

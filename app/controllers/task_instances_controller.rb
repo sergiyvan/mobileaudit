@@ -60,7 +60,6 @@ class TaskInstancesController < ApplicationController
   end
 
   def update_changes_agent
-      puts params
       @task_instance.status = task_instance_params[:status]
       params[:task_step].each_with_index do |quest, i|
         if @task_instance.content[i][:type].to_i == 1
@@ -157,7 +156,7 @@ class TaskInstancesController < ApplicationController
       prefix = Pathname.new(Rails.env).join(@task_instance.task.id.to_s, 'answer_file')
       s3 = AWS::S3.new
       file_path = prefix.join(file.original_filename).to_s
-      file_url = s3.buckets['checklinestorage'].objects[file_path].write(file.read).url_for(:read, expires: 1.year.from_now)
+      file_url = s3.buckets['checklinestorage'].objects[file_path].write(file.read).url_for(:read, expires: 1.year.from_now).to_s
     end
 
 

@@ -25,6 +25,14 @@
   <%= @payout.user.phone %>
 </p>
 
+<p><strong>Task Tickets Id's</strong>
+  <% if !@payout.task_instance_ids.empty? %>
+    <% @payout.task_instance_ids.each do |ti| %>
+      <%= link_to(ti.id, ti) %>
+    <% end %>
+  <% end %>
+</p>
+
 
 <%= link_to 'Edit', edit_payout_path(@payout) %> |
 <%= link_to 'Back', payouts_path %>

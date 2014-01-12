@@ -9,7 +9,10 @@
 </head>
 <body>
 <% if user_signed_in? %>
-<%= link_to('Logout', destroy_user_session_path, :method => :delete) %> 
+<%= link_to('Logout', destroy_user_session_path, :method => :delete) %> |
+<%= link_to('Tasks', tasks_path) %> |
+<%= link_to('Task Tickets', task_instances_path) %> |
+<%= link_to('Payouts', payouts_path) %>
 <% end %>
 <%= yield %>
 

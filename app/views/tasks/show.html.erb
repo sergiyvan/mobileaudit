@@ -45,37 +45,7 @@
   <%= @task.exp_require %>
 </p>
 
-<% @task.content.each_with_index do |quest, i| %>
-
-  <div class="field" id="task_steps">
-    <strong>Task Content:</strong>
-
-    <div class="task_step">
-      <div class="task_step_numer"><span class="prop_name">Номер шага:</span> <%= i %></div>
-      <div><span class="prop_name">Step Type:</span> <%= quest[:type] %></div>
-        <% unless quest[:file].nil? %>
-          <div><span class="prop_name">Illustration:</span> 
-            <% quest[:file].each do |qfile| %>
-              <%= image_tag(qfile) %>
-            <% end %>
-          </div>
-        <% end %>
-      <div><span class="prop_name">Question:</span> <%= quest[:question] %></div>
-      <div><span class="prop_name">Predefined Answers:</span>
-        <% unless quest[:answer].nil? %>
-          <ul>
-            <% quest[:answer].each do |qanswer| %>
-              <li><%= qanswer %></li>
-            <% end %>
-          </ul>
-        <% else %>
-          <span class="">There are no predefined answers / free answer</span>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-<% end %>
+<%= render 'shared/show_task_content', object: @task %>
 <!--
 <p>
   <strong>Task Content:</strong>

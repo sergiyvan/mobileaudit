@@ -63,9 +63,9 @@ class TaskInstancesController < ApplicationController
       @task_instance.status = task_instance_params[:status]
       params[:task_step].each_with_index do |quest, i|
         if @task_instance.content[i][:type].to_i == 1
-          @task_instance.content[i][:answer] = update_ti_answer_file(quest[1][:answer])
+          @task_instance.content[i][:given_answer] = update_ti_answer_file(quest[1][:answer])
         else
-          @task_instance.content[i][:answer] = quest[1][:answer]
+          @task_instance.content[i][:given_answer] = quest[1][:answer]
         end
       end
 

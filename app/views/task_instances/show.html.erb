@@ -5,10 +5,54 @@
   <%= @task_instance.id %>
 </p>
 
+<!--
 <p>
   <strong>Content:</strong>
   <%= @task_instance.content %>
 </p>
+-->
+
+<% @task_instance.content.each_with_index do |quest, i| %>
+
+  <div class="field" id="task_steps">
+    <strong>Task Content:</strong>
+
+    <div class="task_step">
+      <div class="task_step_numer"><span class="prop_name">Номер шага:</span> <%= i %></div>
+      <div><span class="prop_name">Step Type:</span> <%= quest[:type] %></div>
+        <% unless quest[:file].nil? %>
+          <div><span class="prop_name">Illustration:</span>
+            <% quest[:file].each do |qfile| %>
+              <%= image_tag(qfile) %>
+            <% end %>
+          </div>
+        <% end %>
+      <div><span class="prop_name">Question:</span> <%= quest[:question] %></div>
+      <div><span class="prop_name">Predefined Answers:</span>
+        <% unless quest[:answer].nil? %>
+          <ul>
+            <% quest[:answer].each do |qanswer| %>
+              <li><%= qanswer %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <span class="">There are no predefined answers / free answer</span>
+        <% end %>
+      </div>
+      <div>
+        <span class="prop_name">Agent Answer:</span>
+        <% unless quest[:given_answer].nil? %>
+          <span><%= quest[:given_answer] if quest[:type].to_i != 1 %></span>
+          <span><img src="<%= quest[:given_answer] if quest[:type].to_i == 1 %>"/></span>
+        <% else %>
+          <span class="">There are no predefined answers / free answer</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
 
 <p>
   <strong>Status:</strong>

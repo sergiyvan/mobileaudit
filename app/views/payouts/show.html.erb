@@ -28,7 +28,7 @@
 <p><strong>Task Tickets Id's</strong>
   <% if !@payout.task_instance_ids.empty? %>
     <% @payout.task_instances.each do |ti| %>
-      <%= link_to(ti.id, ti) %>
+      <%= link_to(ti.id, ti) %> <br>
     <% end %>
   <% end %>
 </p>

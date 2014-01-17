@@ -84,7 +84,7 @@ class TasksController < ApplicationController
     long = params[:longitude]
     respond_to do |format|
       if !Geocoder.address([lat,long]).nil?
-        @tasks = nearbary_tasks(lat, long, distance=10)    
+        @tasks = nearbary_tasks(lat, long, distance=30)
         #format.html { redirect_to tasks_url }
         format.json { render json: @tasks }
       else 

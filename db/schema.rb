@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140119151530) do
+ActiveRecord::Schema.define(version: 20140119180434) do
 
   create_table "payouts", force: true do |t|
     t.integer  "price"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140119151530) do
     t.float    "latitude"
     t.float    "longitude"
     t.date     "expdate"
+    t.integer  "time_to_finish", default: 180
   end
 
   create_table "users", force: true do |t|

@@ -131,7 +131,7 @@ class TasksController < ApplicationController
     # end
 
     def updatable
-      redirect_to @task, notice: 'Allready taken by some agent!' if @task.users.empty?
+      redirect_to @task, notice: 'Allready taken by some agent!' if !@task.users.empty?
     end
 
     def set_task_content
@@ -157,6 +157,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :description, :address, :price, :expirience, :status, :task_type, :content, :exp_require, :amount, :expdate)
+      params.require(:task).permit(:name, :description, :address, :price, :expirience, :status, :task_type, :content, :exp_require, :amount, :expdate, :time_to_finish)
     end
 end

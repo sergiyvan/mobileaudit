@@ -13,6 +13,7 @@
       <th>Task type</th>
       <th>Exp require</th>
       <th>Expiration date</th>
+      <th>Minutes to finish</th>
       <th></th>
       <th></th>
       <th></th>
@@ -32,6 +33,7 @@
         <td><%= task.task_type %></td>
         <td><%= task.exp_require %></td>
         <td><%= task.expdate.strftime("%d-%m-%Y") %></td>
+        <td><%= task.time_to_finish %></td>
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>

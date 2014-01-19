@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   include TasksHelper
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!#, :except => [:some_action_without_auth]
- # before_filter :updatable, only: [:update]
+  before_filter :updatable, only: [:update]
   skip_load_resource :only => [:create]
   load_and_authorize_resource
 
@@ -130,8 +130,9 @@ class TasksController < ApplicationController
     #   end
     # end
 
-    #def updatable
-      #render html: {action: 'show'}, notice: 'Allready taken by some agent!' if !@task.users.empty?
+    def updatable
+      redirect_to @task, notice: 'Allready taken by some agent!' if @task.users.empty?
+    end
 
     def set_task_content
       if !params[:task_step].nil?

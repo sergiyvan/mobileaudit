@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140102104816) do
+ActiveRecord::Schema.define(version: 20140119151530) do
 
   create_table "payouts", force: true do |t|
     t.integer  "price"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140102104816) do
     t.text     "content"
     t.float    "latitude"
     t.float    "longitude"
+    t.date     "expdate"
   end
 
   create_table "users", force: true do |t|

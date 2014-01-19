@@ -19,6 +19,12 @@
 <div style='width: 800px;'>
   <div id="map" style='width: 800px; height: 400px;'></div>
 </div>
+
+<p>
+  <strong>Expire date:</strong>
+  <%= @task.expdate.strftime("%d-%m-%Y") %>
+</p>
+
 <p>
   <strong>Price:</strong>
   <%= @task.price %>

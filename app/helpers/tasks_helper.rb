@@ -3,7 +3,7 @@ module TasksHelper
 	def nearbary_tasks(latitude, longitude, distance=10)
 		center_point = [latitude, longitude]
 		box = Geocoder::Calculations.bounding_box(center_point, distance)
-		tasks = filter_by_free_inst(Task.within_bounding_box(box).concat(Task.not_geocoded) - user_tasks(current_user) - Task.where('exp_require > ? ', current_user.exp)
+		tasks = filter_by_free_inst(Task.within_bounding_box(box).concat(Task.not_geocoded) - user_tasks(current_user) - Task.where('exp_require > ? OR expdate < DATE(?)', current_user.exp, Time.zone.now.beginning_of_day)
 )
 	end
 

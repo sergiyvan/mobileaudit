@@ -7,6 +7,7 @@ gem 'gmaps4rails'
 gem 'devise'
 gem 'cancan'
 gem 'aws-sdk'
+gem 'jquery-ui-rails'
 
 # Use postgresql as the database for Active Record
 gem 'pg'

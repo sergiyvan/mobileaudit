@@ -72,3 +72,10 @@ function taskStepCut( dom ){
   taskStepNumerize()
 };
 
+/// Datepicker
+var expdate = new Date($.now()+3600*60*60*60*20)
+$(function() {
+  $('#task_expdate').datepicker({ dateFormat: 'dd-mm-yy' });
+  $('#task_expdate').datepicker('setDate', expdate);
+});
+

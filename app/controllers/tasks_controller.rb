@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   include TasksHelper
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :show_results]
   before_filter :authenticate_user!#, :except => [:some_action_without_auth]
   before_filter :updatable, only: [:update]
   skip_load_resource :only => [:create]
@@ -93,6 +93,14 @@ class TasksController < ApplicationController
         format.json { render json: {status: :oooops}, status: :unprocessable_entity }
       end
     end
+  end
+
+  def show_results
+    @QUEST_TYPES = ["Предопределенные ответы", "Фотоответ(снимок с камеры)", "Ответ в свободной форме"]
+    @quests = @task.content
+    @task_instances = @task.task_instances.where('status = ? OR status = ?', :finished, :paid)
+    require 'debugger'
+    debugger
   end
 
   private

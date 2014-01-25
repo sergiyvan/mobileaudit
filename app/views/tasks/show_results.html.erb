@@ -1,0 +1,31 @@
+<h1>Task Results</h1>
+
+
+<table>
+  <tr>
+      <td></td>
+    <% @quests.each do |quest| %>    
+      <td>
+        Quest Type: <%= @QUEST_TYPES[quest[:type].to_i] %> <br>
+        Question/Quest Description: <%= quest[:question] %> <br>
+        <% unless quest[:answer].nil? %>
+          Predifined Answers:
+          <%= quest[:answer].join(', ') %>
+        <% end %>
+      </td>      
+    <% end %>
+  </tr>
+
+  <% @task_instances.each do |ti| %>
+    <tr>
+      <td><%= link_to 'Show Ticket', ti %></td>
+      <% ti.content.each do |q_solution| %>
+        <td>
+          <%= q_solution[:given_answer] if q_solution[:type]!="1" %>
+          <%= link_to image_tag(q_solution[:given_answer], size: "50x50"), url_for(q_solution[:given_answer]) if q_solution[:type]=="1" %>
+        </td>    
+      <% end %>
+  </tr>
+  <% end %> 
+
+</table>

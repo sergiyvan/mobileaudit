@@ -12,7 +12,11 @@ Mobileaudit::Application.routes.draw do
   resources :task_instances
 
   get 'tasks/show_possible_tasks', to: 'tasks#show_possible_tasks'
-  resources :tasks
+  resources :tasks do
+    member do
+      get :show_results
+    end
+  end
 
 # Better way!!!!!!!!!! TODO
   resources :task_instances do

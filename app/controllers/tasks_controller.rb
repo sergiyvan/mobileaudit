@@ -99,8 +99,6 @@ class TasksController < ApplicationController
     @QUEST_TYPES = ["Предопределенные ответы", "Фотоответ(снимок с камеры)", "Ответ в свободной форме"]
     @quests = @task.content
     @task_instances = @task.task_instances.where('status = ? OR status = ?', :finished, :paid)
-    require 'debugger'
-    debugger
   end
 
   private

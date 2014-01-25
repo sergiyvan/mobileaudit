@@ -1,10 +1,11 @@
 class TaskInstancesController < ApplicationController
   include TaskInstancesHelper
-  before_action :set_task_instance, only: [:show, :edit, :update, :destroy, :update_changes_agent, :take, :finished]
+  before_action :set_task_instance, only: [:show, :edit, :update, :destroy, :update_changes_agent, :take, :cancel, :finished]
   before_filter :free_task_instance?, only: [:take]
   before_filter :my_task_instance?, only: [:cancel]
   before_filter :cancellable?, only: [:cancel]
   before_filter :permited_cahnges?, only: [:update_changes_agent]
+  before_filter :time_expired?, only: [:update_changes_agent]
   before_filter :authenticate_user!#, :except => [:some_action_without_auth]
   skip_load_resource :only => [:create]
   load_and_authorize_resource
@@ -77,6 +78,7 @@ class TaskInstancesController < ApplicationController
   def take
       @task_instance.status="in_progress"
       @task_instance.user = current_user
+      @task_instance.taken_at = Time.now
       if @task_instance.save
           render action: 'show', status: 200, location: @task_instance
       else
@@ -89,6 +91,7 @@ class TaskInstancesController < ApplicationController
       @task_instance.user = nil
       @task_instance.content = @task_instance.task.content
       @task_instance.comment = ""
+      @task_instance.taken_at = nil
       if @task_instance.save
           render action: 'show', status: 200, location: @task_instance
       else
@@ -149,6 +152,12 @@ class TaskInstancesController < ApplicationController
     def permited_cahnges?
       if !(@task_instance.user == current_user && (can_set_status(task_instance_params[:status]) || task_instance_params[:status].nil?))
         render json: {status: :unpermitted_update}, status: 500
+      end
+    end
+
+    def time_expired?
+      if Time.now > @task_instance.taken_at + @task_instance.task.time_to_finish.minute
+        render json: { error: 'to late' }, status: 500
       end
     end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140125153306) do
+ActiveRecord::Schema.define(version: 20140131183156) do
 
   create_table "payouts", force: true do |t|
     t.integer  "price"
@@ -30,9 +30,11 @@ ActiveRecord::Schema.define(version: 20140125153306) do
     t.datetime "updated_at"
     t.integer  "task_id"
     t.integer  "user_id"
-    t.text     "comment",    default: ""
+    t.text     "comment",        default: ""
     t.integer  "payout_id"
     t.datetime "taken_at"
+    t.float    "agent_pos_lat"
+    t.float    "agent_pos_long"
   end
 
   add_index "task_instances", ["payout_id"], name: "index_task_instances_on_payout_id", using: :btree

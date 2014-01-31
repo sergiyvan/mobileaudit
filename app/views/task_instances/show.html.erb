@@ -14,6 +14,11 @@
 
 <%= render 'shared/show_task_content', object: @task_instance %>
 
+<p>
+  <strong>Agent Position:</strong> <br>
+  Latitude: <%= @task_instance.agent_pos_lat %> <br>
+  Longitude: <%= @task_instance.agent_pos_long %> 
+</p>
 
 <p>
   <strong>Status:</strong>

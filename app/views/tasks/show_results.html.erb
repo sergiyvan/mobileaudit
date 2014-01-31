@@ -4,6 +4,7 @@
 <table>
   <tr>
       <td></td>
+      <td>Agent Pos.</td>
     <% @quests.each do |quest| %>    
       <td>
         Quest Type: <%= @QUEST_TYPES[quest[:type].to_i] %> <br>
@@ -19,6 +20,9 @@
   <% @task_instances.each do |ti| %>
     <tr>
       <td><%= link_to 'Show Ticket', ti %></td>
+      <td>Latitude: <%= ti.agent_pos_lat %> <br>
+          Longitude: <%= ti.agent_pos_long %>
+      </td>
       <% ti.content.each do |q_solution| %>
         <td>
           <%= q_solution[:given_answer] if q_solution[:type]!="1" %>

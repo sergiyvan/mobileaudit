@@ -62,6 +62,8 @@ class TaskInstancesController < ApplicationController
 
   def update_changes_agent
       @task_instance.status = task_instance_params[:status]
+      @task_instance.agent_pos_lat ||= task_instance_params[:agent_pos_lat]
+      @task_instance.agent_pos_long ||= task_instance_params[:agent_pos_long]
       params[:task_step].each_with_index do |quest, i|
         if @task_instance.content[i][:type].to_i == 1
           @task_instance.content[i][:given_answer] = update_ti_answer_file(quest[1][:answer])
@@ -171,6 +173,6 @@ class TaskInstancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_instance_params
-      params.require(:task_instance).permit(:status, :content, :comment)
+      params.require(:task_instance).permit(:status, :content, :comment, :agent_pos_lat, :agent_pos_long)
     end
 end

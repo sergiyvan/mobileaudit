@@ -1,6 +1,6 @@
 class TaskInstancesController < ApplicationController
   include TaskInstancesHelper
-  before_action :set_task_instance, only: [:show, :edit, :update, :destroy, :update_changes_agent, :take, :cancel, :finished]
+  before_action :set_task_instance, only: [:show, :edit, :update, :destroy, :update_changes_agent, :take, :cancel, :finished, :remaining_time]
   before_filter :free_task_instance?, only: [:take]
   before_filter :my_task_instance?, only: [:cancel]
   before_filter :cancellable?, only: [:cancel]
@@ -118,6 +118,10 @@ class TaskInstancesController < ApplicationController
     else
       redirect_to @task_instance, notice: 'Permission error'
     end
+  end
+
+  def remaining_time
+      render json: @task_instance.time_left
   end
 
   # DELETE /task_instances/1

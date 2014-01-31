@@ -10,4 +10,8 @@ class TaskInstance < ActiveRecord::Base
 		agent.update(credit: self.task.price+agent.credit, exp: self.task.expirience+agent.exp)
 	end
 
+	def time_left
+		((self.taken_at + self.task.time_to_finish.minute) - Time.now).to_int
+	end
+
 end

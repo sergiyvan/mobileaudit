@@ -28,6 +28,7 @@ Mobileaudit::Application.routes.draw do
   #     post :take
   #     post :cancel
   #     post :update_changes_agent
+      get :remaining_time
       get :finished
     end
   end

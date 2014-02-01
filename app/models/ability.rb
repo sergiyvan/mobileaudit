@@ -18,7 +18,9 @@ class Ability
       can :update_changes_agent, TaskInstance
       can :my_tasks, TaskInstance
       can :my_statistic, TaskInstance
+      can :remaining_time, TaskInstance
       can :create, Payout
+      can :my_user_data, User
     end
 
 

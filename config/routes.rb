@@ -2,6 +2,7 @@ Mobileaudit::Application.routes.draw do
   get "users/my_user_data"
   #devise_for :users
   devise_for :users, :controllers => {:sessions => 'sessions', only: [:create]}
+  resources :users
 
   post 'task_instances/take/:id', to: 'task_instances#take'
   post 'task_instances/cancel/:id', to: 'task_instances#cancel'

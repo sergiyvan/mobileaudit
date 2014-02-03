@@ -11,7 +11,11 @@ class TaskInstance < ActiveRecord::Base
 	end
 
 	def time_left
-		((self.taken_at + self.task.time_to_finish.minute) - Time.now).to_int
+		begin
+			((self.taken_at + self.task.time_to_finish.minute) - Time.now).to_int
+		rescue
+			self.task.time_to_finish*60
+		end
 	end
 
 end

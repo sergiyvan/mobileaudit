@@ -42,6 +42,7 @@ end
 group :development do
   gem 'awesome_print'
   gem 'debugger'
+  gem 'rails-erd'
 end
 
 group :development, :test do

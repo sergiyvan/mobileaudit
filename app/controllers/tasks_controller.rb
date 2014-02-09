@@ -150,7 +150,7 @@ class TasksController < ApplicationController
             s3 = AWS::S3.new
             uploads.each do |up|
               file_path = prefix.join(up.original_filename).to_s
-              file_url = s3.buckets['checklinestorage'].objects[file_path].write(up.read).url_for(:read, expires: 1.year.from_now)
+              file_url = s3.buckets['checklinestorage1'].objects[file_path].write(up.read).url_for(:read, expires: 1.year.from_now)
               file_urls << file_url.to_s
             end
           end

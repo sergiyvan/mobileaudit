@@ -171,7 +171,7 @@ class TaskInstancesController < ApplicationController
       prefix = Pathname.new(Rails.env).join(@task_instance.task.id.to_s, 'answer_file')
       s3 = AWS::S3.new
       file_path = prefix.join(file.original_filename).to_s
-      file_url = s3.buckets['checklinestorage'].objects[file_path].write(file.read).url_for(:read, expires: 1.year.from_now).to_s
+      file_url = s3.buckets['checklinestorage1'].objects[file_path].write(file.read).url_for(:read, expires: 1.year.from_now).to_s
     end
 
 

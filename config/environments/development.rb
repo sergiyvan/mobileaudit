@@ -20,7 +20,7 @@ Mobileaudit::Application.configure do
     :port                 => 587,
     :domain               => "checklines.pro",
     :user_name            => "support@checklines.pro",
-    :password             => "alex87",
+    :password             => "support2014s",
     :authentication       => :login,
     :enable_starttls_auto => true
   }

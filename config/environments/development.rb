@@ -18,8 +18,8 @@ Mobileaudit::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.yandex.ru",
     :port                 => 587,
-    :domain               => "checklines.pro",
-    :user_name            => "support@checklines.pro",
+    :domain               => "checklines.ru",
+    :user_name            => "support@checklines.ru",
     :password             => "support2014s",
     :authentication       => :login,
     :enable_starttls_auto => true

@@ -18,13 +18,13 @@ Mobileaudit::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.yandex.ru",
     :port                 => 587,
-    :domain               => "checklines.pro",
-    :user_name            => "support@checklines.pro",
+    :domain               => "checklines.ru",
+    :user_name            => "support@checklines.ru",
     :password             => "support2014s",
     :authentication       => :login,
     :enable_starttls_auto => true
   }
-  config.action_mailer.default_url_options = { :host => "checklines.pro" }
+  config.action_mailer.default_url_options = { :host => "checklines.ru" }
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.

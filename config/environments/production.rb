@@ -24,7 +24,7 @@ Mobileaudit::Application.configure do
     :authentication       => :login,
     :enable_starttls_auto => true
   }
-  config.action_mailer.default_url_options = { :host => "checklines.ru" }
+  config.action_mailer.default_url_options = { :host => "checklines.herokuapp.com" }
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.

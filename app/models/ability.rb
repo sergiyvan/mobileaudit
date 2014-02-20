@@ -11,7 +11,6 @@ class Ability
     elsif user.role? 'operator'
       can :manage, :all
     elsif user.role? 'agent'
-      can :read, Task
       can :show_possible_tasks, Task
       can :take, TaskInstance
       can :cancel, TaskInstance

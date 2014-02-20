@@ -13,4 +13,12 @@ class ApplicationController < ActionController::Base
 	    end
 	  end
 
+	  def after_sign_in_path_for(user)
+		if current_user.role == "agent"
+			staticpages_show_path
+		else
+			super
+		end
+	  end
+
 end
